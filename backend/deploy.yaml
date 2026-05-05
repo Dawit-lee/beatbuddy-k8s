@@ -56,3 +56,13 @@ spec:
                 secretKeyRef:
                   name: beatbuddy-secret
                   key: RAPIDAPI_KEY
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: beatbuddy-secret
+                  key: DB_PASSWORD
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: beatbuddy-secret
+                  key: REDIS_PASSWORD
