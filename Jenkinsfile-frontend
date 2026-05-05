@@ -1,0 +1,33 @@
+pipeline {
+    agent any
+    parameters {
+        string(name: 'DOCKER_IMAGE_VERSION', defaultValue: '', description: 'Docker Image Version')
+    }
+    stages {
+        stage('Update deploy.yaml') {
+            steps {
+                dir('frontend') {
+                    sh 'git checkout main'
+                    sh "sed -i 's|huisuz/beatbuddy-frontend:.*|huisuz/beatbuddy-frontend:${params.DOCKER_IMAGE_VERSION}|g' deploy.yaml"
+                    sh 'cat deploy.yaml'
+                }
+            }
+        }
+        stage('Commit & Push') {
+            steps {
+                sh 'git config user.name "jenkins"'
+                sh 'git config user.email "jenkins@beatbuddy.com"'
+                sh 'git add .'
+                sh "git commit -m 'Update frontend image to ${params.DOCKER_IMAGE_VERSION}'"
+                sshagent(['github-beatbuddy-k8s']) {
+                    sh '''
+                        mkdir -p ~/.ssh
+                        ssh-keyscan github.com >> ~/.ssh/known_hosts
+                        git remote set-url origin git@github.com:huisu73/beatbuddy-k8s.git
+                        git push origin main
+                    '''
+                }
+            }
+        }
+    }
+}
