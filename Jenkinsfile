@@ -20,11 +20,9 @@ pipeline {
                 sh 'git config user.email "jenkins@beatbuddy.com"'
                 sh 'git add .'
                 sh "git commit -m 'Update ${params.SERVICE} image to ${params.DOCKER_IMAGE_VERSION}'"
-                sshagent(['github-beatbuddy-k8s']) {
+                withCredentials([usernamePassword(credentialsId: 'github-ssh-key', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_PASS')]) {
                     sh '''
-                        mkdir -p ~/.ssh
-                        ssh-keyscan github.com >> ~/.ssh/known_hosts
-                        git remote set-url origin git@github.com:Dawit-lee/beatbuddy-k8s.git
+                        git remote set-url origin https://${GIT_USER}:${GIT_PASS}@github.com/Dawit-lee/beatbuddy-k8s.git
                         git push origin main
                     '''
                 }
