@@ -5,6 +5,9 @@ metadata:
   namespace: beatbuddy
   annotations:
     nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-http-version: "1.1"
 spec:
   ingressClassName: nginx
   rules:
@@ -12,6 +15,13 @@ spec:
       http:
         paths:
           - path: /api/
+            pathType: Prefix
+            backend:
+              service:
+                name: beatbuddy-backend-svc
+                port:
+                  number: 8080
+          - path: /ws/
             pathType: Prefix
             backend:
               service:
