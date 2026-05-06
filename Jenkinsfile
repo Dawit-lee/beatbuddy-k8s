@@ -9,7 +9,7 @@ pipeline {
             steps {
                 dir("${params.SERVICE}") {
                     sh 'git checkout main'
-                    sh "sed -i 's|huisuz/beatbuddy-${params.SERVICE}:.*|huisuz/beatbuddy-${params.SERVICE}:${params.DOCKER_IMAGE_VERSION}|g' deploy.yaml"
+                    sh "sed -i 's|dawitlee/beatbuddy-${params.SERVICE}:.*|dawitlee/beatbuddy-${params.SERVICE}:${params.DOCKER_IMAGE_VERSION}|g' deploy.yaml"
                     sh 'cat deploy.yaml'
                 }
             }
@@ -24,7 +24,7 @@ pipeline {
                     sh '''
                         mkdir -p ~/.ssh
                         ssh-keyscan github.com >> ~/.ssh/known_hosts
-                        git remote set-url origin git@github.com:huisu73/beatbuddy-k8s.git
+                        git remote set-url origin git@github.com:Dawit-lee/beatbuddy-k8s.git
                         git push origin main
                     '''
                 }
