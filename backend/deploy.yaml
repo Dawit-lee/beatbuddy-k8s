@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: dawitlee/beatbuddy-backend:28
+          image: dawitlee/beatbuddy-backend:29
           resources:
             requests:
               memory: "128Mi"
