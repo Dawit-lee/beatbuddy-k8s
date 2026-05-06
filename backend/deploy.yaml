@@ -66,3 +66,10 @@ spec:
                 secretKeyRef:
                   name: beatbuddy-secret
                   key: REDIS_PASSWORD
+          volumeMounts:
+            - name: uploads
+              mountPath: /app/uploads
+      volumes:
+        - name: uploads
+          persistentVolumeClaim:
+            claimName: beatbuddy-uploads-pvc
