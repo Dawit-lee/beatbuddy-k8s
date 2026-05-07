@@ -18,7 +18,7 @@ spec:
           image: dawitlee/beatbuddy-backend:38
           resources:
             requests:
-              memory: "512Gi"
+              memory: "512mi"
               cpu: "500m"
             limits:
               memory: "2Gi"
