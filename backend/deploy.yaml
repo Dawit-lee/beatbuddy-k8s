@@ -18,10 +18,10 @@ spec:
           image: dawitlee/beatbuddy-backend:
           resources:
             requests:
-              memory: "512Mi"
+              memory: "512Gi"
               cpu: "500m"
             limits:
-              memory: "1Gi"
+              memory: "2Gi"
               cpu: "1000m"
           ports:
             - containerPort: 8080
